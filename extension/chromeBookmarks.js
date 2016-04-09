@@ -1,10 +1,4 @@
-chrome.bookmarks.getTree(function(itemTree){
-    itemTree.forEach(function(item){
-        processNode(item);
-    });
-});
-
-processNode = function(node) {
+var processNode = function(node) {
     // recursively process child nodes
     if(node.children) {
         node.children.forEach(function(child) { processNode(child); });
@@ -15,3 +9,9 @@ processNode = function(node) {
 		document.getElementsByTagName('body')[0].innerHTML += ("<a target='_blank' href=" + node.url + ">"+ node.url+"<\p>"); 
     }
 }
+
+chrome.bookmarks.getTree(function(itemTree){
+    itemTree.forEach(function(item){
+        processNode(item);
+    });
+});
