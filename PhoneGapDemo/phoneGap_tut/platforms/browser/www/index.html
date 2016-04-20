@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> Hello 136! </title>
+    <style>
+      body {background-color: white}
+      p {font-size: 300%}
+      p {text-align: center}
+    </style>
+  </head>
+  <body>
+    <p id="msg">Hello 136!</p>
+    <div id="camera">
+        <button class="camera-control" onclick="capturePhoto();">Capture Photo</button>
+
+        <div style="text-align:center;margin:20px;">
+            <img id="cameraPic" src="" style="width:auto;height:120px;"></img>
+        </div>
+    </div>
+    <script src = "update.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+  </body>
+</html>
