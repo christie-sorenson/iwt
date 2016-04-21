@@ -5,16 +5,28 @@
   "description": "This displays the user's bookmarks and a cse logo.",
   "version": "1.0",
 
-  "browser_action": {
+ "browser_action": {
     "default_icon": "images/cselogo-small.png",
     "default_popup": "popup.html"
   },
+
+  "content_scripts": [
+    {
+      "matches": ["http://localhost/*", "https://localhost/*"],
+      "js": ["js/flagExt.js"],
+      "run-at": ["document_end"]
+    }
+  ],
+
   "icons": {
     "16": "images/cselogo-small.png",
     "48": "images/cselogo-small.png",
     "128": "images/cselogo-small.png"
   },
   "permissions": [
-    "bookmarks"
+    "bookmarks",
+    "tabs",
+    "http://localhost/*",
+    "https://localhost/*"
   ]
 }

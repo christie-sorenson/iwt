@@ -37,19 +37,23 @@ var processNode = function(node, level) {
     }
 };
 
+document.addEventListener('DOMContentLoaded', onInit, false);
 var htmlBody;
-chrome.bookmarks.getTree(function(itemTree){
-	htmlBody = "";
 
-	if(itemTree) {
-    	htmlBody += "<h1>Bookmarks Found, '|' indicates folder nesting</h1>";		
-	} else {
-    	htmlBody += "<h1>No Bookmarks Found</h1>";		
-	}
-    
-    itemTree.forEach(function(item){
-		processNode(item, 0);
-    });
+function onInit() {
+	chrome.bookmarks.getTree(function(itemTree){
+		htmlBody = "";
 
-    document.getElementsByTagName('body')[0].innerHTML += htmlBody;
-});
+		if(itemTree) {
+	    	htmlBody += "<h1>Bookmarks Found, '|' indicates folder nesting</h1>";		
+		} else {
+	    	htmlBody += "<h1>No Bookmarks Found</h1>";		
+		}
+	    
+	    itemTree.forEach(function(item){
+			processNode(item, 0);
+	    });
+
+	    document.getElementsByTagName('body')[0].innerHTML += htmlBody;
+	});
+}
