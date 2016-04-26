@@ -1,0 +1,27 @@
+
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+}
+</style>
+
+<table>
+<tr>
+    <th>Title</th>
+    <th>Author</th>
+    <th>Price</th>
+</tr>
+<% books.forEach(function(book) { %>
+<tr>
+    <td><%= book.title %></td>
+    <td><%= book.author %></td>
+    <td>$<%= book.price %></td>
+</tr>
+
+<% }); %>
+
+</table>

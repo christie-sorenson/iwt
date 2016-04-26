@@ -1,0 +1,51 @@
+<script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+}
+a { cursor: pointer; color: blue; }
+a:hover,a.hover { text-decoration: underline; }
+</style>
+
+<table>
+<tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Author</th>
+    <th>Price</th>
+    <th></th>
+</tr>
+<% books.forEach(function(book) { %>
+<tr>
+    <td><%= book.id %></td>
+    <td><%= book.title %></td>
+    <td><%= book.author %></td>
+    <td>$<%= book.price %></td>
+    <td><a onClick="deleteBook(<%= book.id %>, this);">Delete</a></td>
+</tr>
+
+<% }); %>
+
+</table>
+
+<script>
+    function deleteBook(id, btn){
+
+        $.ajax({
+            url:'/api/books/' + id,
+            type: 'DELETE',
+            success: function(res) {
+                var row = btn.parentNode.parentNode;
+                row.parentNode.removeChild(row);
+                return false;
+            }
+        });
+    }
+
+
+
+</script>
