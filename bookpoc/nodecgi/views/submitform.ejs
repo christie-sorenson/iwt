@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>REQUEST DATA</h1>
+<h3>Request Headers</h3>
+<% for (var name in headers) { %>
+    <strong><%= name %>: </strong>
+    <%= headers[name] %>
+<br>
+<% }; %>
+
+
+<h3>GET DATA</h3>
+<% for (var name in getData) { %>
+<strong><%= name %>: </strong>
+<%= getData[name] %>
+<br>
+<% }; %>
+
+
+<h3>POST DATA</h3>
+<% for (var name in postData) { %>
+<strong><%= name %>: </strong>
+<%= postData[name] %>
+<br>
+<% }; %>
+
+
+</body>
+</html>
+
+

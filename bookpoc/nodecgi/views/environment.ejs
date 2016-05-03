@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Environment</h1>
+<h3>Request Headers</h3>
+<% for (var name in headers) { %>
+    <strong><%= name %>: </strong>
+    <%= headers[name] %>
+<br>
+<% }; %>
+
+
+<h3>Node Settings</h3>
+<% for (var name in process) { %>
+<strong><%= name %>: </strong>
+<%= process[name] %>
+<br>
+<% }; %>
+
+
+<h3>Environment Settings</h3>
+<% for (var name in env) { %>
+<strong><%= name %>: </strong>
+<%= env[name] %>
+<br>
+<% }; %>
+
+
+</body>
+</html>
+
+

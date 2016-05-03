@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Session 3</title>
+</head>
+<body>
+<h3>Page 2</h3>
+<%= message %><br>
+<a href="session3.jss">Next Page</a>
+
+<% if (loggedIn){ %>
+    <a href="logout.jss">Logout</a>
+<% } else { %>
+    <a href="session1.jss">Login</a>
+<% } %>
+</body>
+</html>
+
+

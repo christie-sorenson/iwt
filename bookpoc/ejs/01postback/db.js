@@ -17,7 +17,8 @@ var MySQL = function() {
         },
         query: function(querystring, callback){
             MySQL.connection.query(querystring, callback);
-        }
+        },
+        escape: mysql.escape
     }
 }();
 

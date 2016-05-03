@@ -5,22 +5,26 @@ const port = 3000;
 db.init();
 
 var express = require('express');
+var bodyParser = require('body-parser');
+
 var app = express();
 var router = express.Router();
 
 app.set('view engine', 'ejs');
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 router.route('/books')
 
-  .get(function (req, res) {
-    books.list(req, res);
-  });
+  .get(books.list)
+
+  .post(books.add)
 
 router.route('/books/:book_id')
 
-  .delete(function(req, res){
-    books.delete(req.params.book_id, req, res);
-  });
+  .delete(books.delete)
+
+  .put(books.update)
 
 app.use('/', router);
 

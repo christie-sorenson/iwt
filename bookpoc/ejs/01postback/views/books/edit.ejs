@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Book</title>
+</head>
+<body>
+<form action="/books/update/<%= book.id %>" method="post">
+    <table>
+        <tr><td>Title: </td><td><input type="text" name="title"  value="<%= book.title %>" ></td></tr>
+        <tr><td>Author: </td><td><input type="text" name="author" value="<%= book.author %>"></td></tr>
+        <tr><td>Price: </td><td><input type="text" name="price" value="<%= book.price %>"></td></tr>
+        <tr><td colspan="2">
+                <input type='submit' value="Save">
+                &nbsp;
+                <a href='/books/'><input type="button" value='Cancel Edit'></a>
+            </td></tr>
+    </table>
+</form>
