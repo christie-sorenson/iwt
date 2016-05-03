@@ -1,9 +1,10 @@
-
+<!-- TODO Add Delete Confirmation Form -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Postback Version</title>
+    <!-- Including CSS in page for example clarity -->
     <style>
         table, th, td {
             border: 1px solid black;
@@ -17,6 +18,9 @@
     </style>
 </head>
 <body>
+
+<a href="/logout">Logout</a><br><br>
+
 <table>
 <tr>
     <th>ID</th>
@@ -26,12 +30,13 @@
     <th></th>
 </tr>
 <% books.forEach(function(book) { %>
-<tr id='display<%= book.id %>'>
+<tr>
+    <!-- Useful for testing purposed to show ID.  Remove in practice. -->
     <td><%= book.id %></td>
-    <td><span><%= book.title %></span></td>
-    <td><span><%= book.author %></span></td>
-    <td>$<span><%= book.price %></span></td>
-    <td><a href="/books/delete/<%= book.id %>"><img src='/images/trash.gif' alt='delete' title='Delete' border='0'></a>
+    <td><%= book.title %></td>
+    <td><%= book.author %></td>
+    <td>$<%= book.price %></td>
+    <td><a href="/books/confirmdelete/<%= book.id %>"><img src='/images/trash.gif' alt='delete' title='Delete' border='0'></a>
     &nbsp;<a href="/books/edit/<%= book.id %>"><img src='/images/pencil.gif' alt='edit' title='Edit' border='0'></a>
     </td>
 </tr>
