@@ -1,0 +1,5 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
+  <GridLayout id="cse">
+    <Label id="text" text="Hello CSE 136" class="title" tap="onAnimate"/>
+  </GridLayout>
+</Page>
