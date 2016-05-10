@@ -1,3 +1,4 @@
+<table>
 <tr>
     <th>ID</th>
     <th>Title</th>
@@ -8,36 +9,16 @@
 <% books.forEach(function(book) { %>
 <tr id='display<%= book.id %>'>
     <td><%= book.id %></td>
-    <td><span><%= book.title %></span></td>
-    <td><span><%= book.author %></span></td>
-    <td>$<span><%= book.price %></span></td>
-    <td><a onClick="deleteBook(<%= book.id %>, this);"><img src='/images/trash.gif' alt='delete' title='Delete' border='0'></a>
-        &nbsp;<a onClick="toggleEdit(<%= book.id %>, true);"><img src='/images/pencil.gif' alt='edit' title='Edit' border='0'></a>
+    <td><span id="title<%=book.id%>"><%= book.title %></span></td>
+    <td><span id="author<%=book.id%>"><%= book.author %></span></td>
+    <td>$<span id="price<%=book.id%>"><%= book.price %></span></td>
+    <td><a onClick="confirmDelete(<%= book.id %>, this);"><img src='/images/trash.gif' alt='delete' title='Delete' border='0'></a>
+        &nbsp;<a onClick="showEdit(<%= book.id %>);"><img src='/images/pencil.gif' alt='edit' title='Edit' border='0'></a>
     </td>
-</tr>
-<tr id='edit<%= book.id %>' style='display:none'>
-        <td><%= book.id %></td>
-        <td><input type="text" id="title<%= book.id %>"  value="<%= book.title %>" ></td>
-        <td><input type="text" id="author<%= book.id %>" value="<%= book.author %>"></td>
-        <td><input type="text" id="price<%= book.id %>" value="<%= book.price %>"></td>
-        <td class='recordcontrol'>
-            <a href='javascript:updateBook(<%= book.id %>)'><img src='/images/save.gif' alt='save' title='Save Record' border='0'></a>
-            &nbsp;
-            <a href='javascript:toggleEdit(<%= book.id %>, false)'><img src='/images/cancel.gif' alt='cancel' title='Cancel Edit' border='0'></a>
-        </td>
 </tr>
 
 <% }); %>
-<tr id="addRow" style="display:none">
-    <form method='post'>
-        <td>&nbsp;</td>
-        <td><input type="text" id="title"  value="" ></td>
-        <td><input type="text" id="author" value=""></td>
-        <td><input type="text" id="price" value=""></td>
-        <td class='recordcontrol'>
-            <a href='javascript:addBook();'><img src='/images/save.gif' alt='save' title='Save Record' border='0'></a>
-            &nbsp;
-            <a href='javascript:toggleAdd(0);'><img src='/images/cancel.gif' alt='cancel' title='Cancel Edit' border='0' /></a>
-        </td>
-    </form>
-</tr>
+
+</table>
+<br>
+<button id="addbutton" value="Add" onclick="showAdd();">Add</button>

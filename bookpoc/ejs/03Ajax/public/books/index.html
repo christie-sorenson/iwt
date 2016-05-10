@@ -1,0 +1,153 @@
+<!--  Clean solution, but external template forces extra Ajax request.
+      Request should not be necessary because template is static. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajax Version</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 5px;
+        }
+        a { cursor: pointer; color: blue; }
+        a:hover,a.hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+<a href="/logout">Logout</a><br><br>
+<div id="display"></div>
+
+<!-- Only using jquery for Ajax calls.  Consider changing to native -->
+<script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+<script src="/scripts/ejs.min.js"></script>
+<script>
+/*  Using Global Scope. Very bad.  If interacting with other scripts, must namespace/modulerize */
+
+/* Script contents should be in external file, but kept in here for demo purposes */
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+        loadList();
+    });
+
+    /*  variable used to store templates in a cache to prevent multiple requests on static file */
+    var templatesCache = [];
+
+
+    /**
+     *   Checks if template exists in the cache.  If so, calls displayTemplate.
+     *   If not, first loads template and adds it to cache before calling displayTemplate.
+     */
+     function loadTemplate(name, data) {
+        /* Check template cache to see if template has been loaded.  If so, immediately call displayTemplate() */
+        if (templatesCache[name]) {
+            displayTemplate(templatesCache[name], data);
+        }
+        else {
+            /* If template is not in cache, use Ajax to fetch template, then store in cache and call displayTemplate() */
+            $.get('/views/books/' + name + '.ejs', function(template) {
+                templatesCache[name] = template;
+                displayTemplate(template, data);
+            });
+        }
+    }
+
+    /**
+     * Takes template string and data and uses EJS to render them together.
+     * Then displays the new HTML inside of the display div.
+     */
+    function displayTemplate(template, data) {
+        var snippet = ejs.render(template, data);
+        document.getElementById('display').innerHTML = snippet;
+    }
+
+    /**
+     *  Uses Ajax to get the book list data from the server.
+     */
+    function loadList() {
+        $.get('/api/books/', function(books) {
+            loadTemplate('list', {books: books});
+        });
+    }
+
+    /**
+     *  Displays the confirm delete page for the passed in book.
+     */
+    function confirmDelete(id) {
+        var title = document.getElementById('title' + id).innerHTML;
+        var book = {id: id, title: title};
+
+        loadTemplate('delete', {book: book});
+    }
+
+    /**
+     *  Uses Ajax to get delete the book from the server.  Calls loadList on success.
+     */
+    function deleteBook(id) {
+        $.ajax({
+            url: '/api/books/' + id,
+            type: 'DELETE',
+            success: function(res) {
+                loadList();
+            }
+        });
+    }
+
+    /**
+     *  Displays the add book page.
+     */
+    function showAdd() {
+        loadTemplate('add');
+    }
+
+    /**
+     *  Uses Ajax to add the new book from the server.  Calls loadList on success.
+     */
+    function addBook() {
+        var title = document.getElementById('title');
+        var author = document.getElementById('author');
+        var price = document.getElementById('price');
+        $.ajax({
+            url: '/api/books/',
+            data: 'title=' + title.value + '&author=' + author.value + '&price=' + price.value,
+            type: 'POST',
+            success: function(res) {
+                loadList();
+            }
+        });
+    }
+
+    /**
+     *  Displays the edit book page for the passed in book.
+     */
+    function showEdit(id) {
+        var title = document.getElementById('title' + id).innerHTML;
+        var author = document.getElementById('author' + id).innerHTML;
+        var price = document.getElementById('price' + id).innerHTML;
+        var book = {id: id, title: title, author: author, price: price};
+        loadTemplate('edit', {book: book});
+    }
+
+    /**
+     *  Uses Ajax to get update the book on the server.  Calls loadList on success.
+     */
+    function updateBook(id) {
+        var title = document.getElementById('edittitle' + id).value;
+        var author = document.getElementById('editauthor' + id).value;
+        var price = document.getElementById('editprice' + id).value;
+        $.ajax({
+            url: '/api/books/' + id,
+            data: 'title=' + title + '&author=' + author + '&price=' + price,
+            type: 'PUT',
+            success: function(res) {
+                loadList();
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

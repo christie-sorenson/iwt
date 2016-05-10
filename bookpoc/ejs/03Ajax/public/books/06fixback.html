@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajax Version</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 5px;
+        }
+        a { cursor: pointer; color: blue; }
+        a:hover,a.hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+<div id="display"></div>
+
+<script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+<script src="/scripts/ejs.min.js"></script>
+<script>
+    $( document ).ready(function() {
+        loadList();
+    });
+
+    window.addEventListener('popstate', function(e) {
+        // e.state is equal to the data-attribute of the last image we clicked
+        console.log(e);
+    });
+
+    var templates = [];
+
+    function loadTemplate(name, data){
+        history.pushState(data, null, "/history/" + name);
+
+        if (templates[name]){
+            displayTemplate(templates[name], data);
+        }
+        else{
+            $.get('/views/books/' + name + '.ejs', function (template) {
+                templates[name] = template;
+                displayTemplate(template, data);
+            });
+        }
+    }
+
+    function displayTemplate(template, data){
+        var snippet = ejs.render(template, data);
+        $('#display').html(snippet);
+    }
+
+    function loadList(){
+        $.get('/api/books/', function(books) {
+            loadTemplate('list',{books: books});
+        });
+    }
+
+    function confirmDelete(id){
+        var title = $('#title' + id).html();
+        var book = {id:id, title:title};
+
+        loadTemplate('delete',{book: book});
+    }
+
+    function deleteBook(id){
+        $.ajax({
+            url:'/api/books/' + id,
+            type: 'DELETE',
+            success: function(res) {
+                loadList();
+            }
+        });
+    }
+
+    function showAdd(){
+        loadTemplate('add');
+    }
+
+    function addBook(){
+        var title = document.getElementById('title');
+        var author = document.getElementById('author');
+        var price = document.getElementById('price');
+        $.ajax({
+            url:'/api/books/',
+            data: 'title=' + title.value + '&author=' + author.value + '&price=' + price.value,
+            type: 'POST',
+            success: function(res) {
+                loadList();
+            }
+        });
+    }
+
+    function showEdit(id){
+        var title = $('#title' + id).html();
+        var author = $('#author' + id).html();
+        var price = $('#price' + id).html();
+        var book = {id:id, title:title, author:author, price:price};
+        loadTemplate('edit',{book: book});
+    }
+
+    function updateBook(id){
+        var title = document.getElementById('edittitle' + id).value;
+        var author = document.getElementById('editauthor' + id).value;
+        var price = document.getElementById('editprice' + id).value;
+        $.ajax({
+            url:'/api/books/' + id,
+            data: 'title=' + title + '&author=' + author + '&price=' + price,
+            type: 'PUT',
+            success: function(res) {
+                loadList();
+            }
+        });
+    }
+
+</script>
+</body>
+</html>
