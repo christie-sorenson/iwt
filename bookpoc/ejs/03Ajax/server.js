@@ -18,7 +18,6 @@ var mySession = session({
 
 var app = express();
 app.use(mySession);
-var router = express.Router();
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -34,21 +33,12 @@ app.use(users.auth);
 /*  Must come after users.auth to ensure even static pages are authenticated */
 app.use(express.static('public'));
 
-/*  TODO: REMOVE router/use app.whatever */
 /*  Could have used router for cleaner code, but used app.method to make paths clear. */
-router.route('/books')
+app.get('/api/books', books.list);
+app.post('/api/books', books.add);
+app.put('/api/books/:book_id(\\d+)', books.update);
+app.delete('/api/books/:book_id(\\d+)', books.delete);
 
-  .get(books.list)
-
-  .post(books.add)
-
-router.route('/books/:book_id')
-
-  .delete(books.delete)
-
-  .put(books.update)
-
-app.use('/api', router);
 
 app.listen(port, function () {
   console.log('Example app listening on port 3000!');

@@ -19,7 +19,6 @@
 <a href="/logout">Logout</a><br><br>
 <div id="display"></div>
 
-<script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
 <script src="/scripts/ejs.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function(event) {
@@ -39,6 +38,38 @@
     var templatesCache = [];
 
     /**
+     * Short, generic Ajax function to avoid jquery usage
+     */
+    function ajax(url, method, data, callback){
+        var request = new XMLHttpRequest();
+        request.open(method, url, true);
+
+        request.onload = function() {
+            if (request.status >= 200 && request.status < 400) {
+                var contentType = request.getResponseHeader('content-type') || '';
+                var response;
+
+                if (contentType.indexOf('json') >= 0){
+                    response = JSON.parse(request.responseText);
+                }
+                else{
+                    response = request.responseText;
+                }
+
+                callback(response);
+            }
+        };
+
+        if (data){
+            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+            request.send(data);
+        }
+        else {
+            request.send();
+        }
+    }
+
+    /**
      *   Adds Request to History
      *   Checks if template exists in the cache.  If so, calls displayTemplate.
      *   If not, first loads template and adds it to cache before calling displayTemplate.
@@ -50,7 +81,7 @@
             displayTemplate(templatesCache[name], data);
         }
         else{
-            $.get('/views/books/' + name + '.ejs', function (template) {
+            ajax('/views/books/' + name + '.ejs', 'GET', null, function (template) {
                 templatesCache[name] = template;
                 displayTemplate(template, data);
             });
@@ -76,14 +107,15 @@
      function addToHistory(name, data){
         data = data || {};
         data.pageName = name;
-        history.pushState(data, null, "/books/06fixback.html#" + name);
+        history.pushState(data, null, "/books/07nojquery.html#" + name);
      }
 
     /**
      *  Uses Ajax to get the book list data from the server.
      */
     function loadList() {
-        $.get('/api/books/', function(books) {
+
+        ajax('/api/books/', 'GET', null, function(books) {
             loadTemplate('list', {books: books});
         });
     }
@@ -102,13 +134,10 @@
      *  Uses Ajax to get delete the book from the server.  Calls loadList on success.
      */
     function deleteBook(id) {
-        $.ajax({
-            url: '/api/books/' + id,
-            type: 'DELETE',
-            success: function(res) {
+        ajax('/api/books/' + id, 'DELETE', null, function(res) {
                 loadList();
             }
-        });
+        );
     }
 
     /**
@@ -125,14 +154,12 @@
         var title = document.getElementById('title');
         var author = document.getElementById('author');
         var price = document.getElementById('price');
-        $.ajax({
-            url: '/api/books/',
-            data: 'title=' + title.value + '&author=' + author.value + '&price=' + price.value,
-            type: 'POST',
-            success: function(res) {
+        var data = 'title=' + title.value + '&author=' + author.value + '&price=' + price.value;
+
+        ajax('/api/books/', 'POST', data, function(res) {
                 loadList();
             }
-        });
+        );
     }
 
     /**
@@ -153,14 +180,12 @@
         var title = document.getElementById('edittitle' + id).value;
         var author = document.getElementById('editauthor' + id).value;
         var price = document.getElementById('editprice' + id).value;
-        $.ajax({
-            url: '/api/books/' + id,
-            data: 'title=' + title + '&author=' + author + '&price=' + price,
-            type: 'PUT',
-            success: function(res) {
+        var data = 'title=' + title + '&author=' + author + '&price=' + price;
+
+        ajax('/api/books/' + id, 'PUT',data, function(res) {
                 loadList();
             }
-        });
+        );
     }
 
 
