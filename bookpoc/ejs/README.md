@@ -1,4 +1,4 @@
-# JavaScript CRUD - List and Delete - EJS/Express Version
+# JavaScript CRUD - EJS/Express Versions
 
 An example to show how to do an express CRUD using MySQL and EJS.  We have 4 examples:
 * Full postback/no ajax (server side template)
