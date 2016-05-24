@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promises</title>
+</head>
+<body>
+<div id="display"></div>
+<script src="/scripts/ejs.min.js"></script>
+<script>
+
+    function log(message){
+        return new Promise(function(resolve, reject) {
+            var randomTime = (Math.floor(Math.random() * 4)) * 500;
+            if (randomTime >=1500){
+                reject('Request Timed Out');
+            }
+            else {
+                setTimeout(function() {
+                    document.getElementById('display').innerHTML += message + '<br>';
+                    resolve();
+                }, randomTime);
+            }
+        });
+    }
+
+    /*  This example will stop if the timeout is every 1500 ms or greater.
+        If this occurs, the chain will stop and no further actions will occur.
+     */
+    log('First Call')
+        .then(function(){
+            return log('Second Call');
+        })
+        .then(function(){
+            return log('Third Call');
+        })
+        .then(function(){
+            return log('Fourth Call');
+        })
+        .then(function(){
+            return log('Done');
+        })
+        .catch(function(err){
+            var msg = 'Cannot load data: ' + err;
+            document.getElementById('display').innerHTML += msg;
+        });
+
+</script>
+</body>
+</html>

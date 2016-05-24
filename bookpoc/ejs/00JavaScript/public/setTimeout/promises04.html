@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promises</title>
+</head>
+<body>
+<div id="display"></div>
+<script src="/scripts/ejs.min.js"></script>
+<script>
+
+    function log(message){
+        return new Promise(function(resolve, reject) {
+            var randomTime = (Math.floor(Math.random() * 4)) * 500;
+            setTimeout(function() {
+                document.getElementById('display').innerHTML += message + '<br>';
+                resolve();
+            }, randomTime);
+
+        });
+    }
+
+    /*  We will execute a call in parallel on every item in an array.
+        Note that the order will be random and it is not possible to do a 'next' since
+        forEach does not return a promise.
+     */
+    var logMessages = ['First Call', 'Second Call', 'Third Call', 'Fourth Call'];
+    logMessages.forEach(log);
+
+
+</script>
+</body>
+</html>

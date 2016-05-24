@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promises</title>
+</head>
+<body>
+<div id="display"></div>
+<script src="/scripts/ejs.min.js"></script>
+<script>
+
+    function log(message){
+        return new Promise(function(resolve, reject) {
+            var randomTime = (Math.floor(Math.random() * 4)) * 1000;
+            setTimeout(function() {
+                document.getElementById('display').innerHTML += message + '<br>';
+                resolve(message + '  displayed at  ' + new Date());
+            }, randomTime);
+
+        });
+    }
+
+    /*  Now we use promises.all to make sure the results are all in before we process anything.
+        The results will all be in the correct order when we process it.
+     */
+    var logMessages = ['First Call', 'Second Call', 'Third Call', 'Fourth Call'];
+    Promise.all(
+        logMessages.map(function(message) {
+            return log(message);
+        })
+    ).then(function(messageList){
+        document.getElementById('display').innerHTML += '<br>';
+        //Now we have the results from the 'resolve' in the order sent, not processed
+        messageList.forEach(function(message) {
+            document.getElementById('display').innerHTML += message + '<br>';
+        });
+    });
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promises</title>
+</head>
+<body>
+<div id="display"></div>
+<script src="/scripts/ejs.min.js"></script>
+<script>
+
+    function log(message){
+        return new Promise(function(resolve, reject) {
+            var randomTime = (Math.floor(Math.random() * 4)) * 500;
+            setTimeout(function() {
+                document.getElementById('display').innerHTML += message + '<br>';
+                resolve();
+            }, randomTime);
+
+        });
+    }
+
+    /*  Now we will take the same array and execute in series.
+        We are replacing each item in the array with a promise that runs when the previous one finishes
+        We set the first item to run on the .next of Promise.resolve which resolves immediately.
+        As it is still using the forEach, it is not chainable, so it ends after the sequence.
+     */
+    var logMessages = ['First Call', 'Second Call', 'Third Call', 'Fourth Call'];
+    var sequence = Promise.resolve();
+    logMessages.forEach(function(message){
+        sequence = sequence.then(function() {
+            return log(message);
+        });
+    })
+    /*  Cannot do the following:
+    .then(function(){
+        document.getElementById('display').innerHTML += 'Done <br>';
+    });
+    */
+
+
+</script>
+</body>
+</html>

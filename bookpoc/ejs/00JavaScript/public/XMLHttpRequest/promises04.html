@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promises</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 5px;
+        }
+        a { cursor: pointer; color: blue; }
+        a:hover,a.hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+<div id="display"></div>
+<script src="/scripts/ejs.min.js"></script>
+<script>
+
+    /**
+     * Short, generic Ajax function for promise POC.  We will only support GET in this example.
+     */
+    function ajax(url){
+        return new Promise(function(resolve, reject) {
+            var request = new XMLHttpRequest();
+            request.open('GET', url, true);
+
+            request.onload = function() {
+                if (request.status >= 200 && request.status < 400) {
+                    var contentType = request.getResponseHeader('content-type') || '';
+                    var response = request.responseText;
+
+                    if (contentType.indexOf('json') >= 0) {
+                        response = JSON.parse(request.responseText);
+                    }
+                    else {
+                        response = request.responseText;
+                    }
+
+                    resolve(response);
+                }
+                else{
+                    reject(Error(request.status + ' - ' + request.statusText + ': ' + url));
+                }
+            };
+
+            request.onerror = function(e, msg) {
+                reject(Error('Request Failed'));
+            };
+
+            request.send();
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+        loadBooks();
+    });
+
+
+    /*  In this example, we will show how to handle errors.  We will load a page that does not exist
+        so we receive a 404.
+     */
+    function loadBooks() {
+        var bookList;
+        ajax('/api/booklist/').then( function(books) {
+            console.log('We will never get here');
+            bookList = books;
+            return ajax('/views/books/list.ejs');
+        }).then (function(template){
+            console.log('We will never get here either');
+            var snippet = ejs.render(template, {books: bookList});
+            document.getElementById('display').innerHTML = snippet;
+        }).catch(function(err) {
+            var msg = 'Cannot load data: ' + err;
+            document.getElementById('display').innerHTML = msg;
+        });
+
+
+
+    }
+
+
+</script>
+</body>
+</html>

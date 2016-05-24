@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promises</title>
+</head>
+<body>
+<div id="display"></div>
+<script src="/scripts/ejs.min.js"></script>
+<script>
+
+    function log(message){
+        return new Promise(function(resolve, reject) {
+            var randomTime = (Math.floor(Math.random() * 4)) * 500;
+            if (randomTime >=1500){
+                reject('Request Timed Out');
+            }
+            else {
+                setTimeout(function() {
+                    document.getElementById('display').innerHTML += message + '<br>';
+                    resolve();
+                }, randomTime);
+            }
+        });
+    }
+
+    /*  We make a generic error function and check for errors between each call to log.
+        In this case if we hit the error, we will continue the execution of logs
+     */
+     function logError(err){
+         var msg = 'Cannot load data: ' + err + '<br>';
+         document.getElementById('display').innerHTML += msg;
+     }
+
+    /*  This example will stop if the timeout is every 1500 ms or greater.
+        Since we are checking after each log, the execution will continue.
+     */
+    log('First Call').catch(logError)
+        .then(function(){
+            return log('Second Call');
+        }).catch(logError)
+        .then(function(){
+            return log('Third Call');
+        }).catch(logError)
+        .then(function(){
+            return log('Fourth Call');
+        }).catch(logError)
+        .then(function(){
+            return log('Done');
+        }).catch(logError);
+
+
+</script>
+</body>
+</html>
