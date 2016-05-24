@@ -1,0 +1,38 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Search</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeSearch()">Close</button>
+    </div>
+  </ion-header-bar>
+  <div class="bar bar-subheader item-input-inset">
+    <div class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="search" class="clearable" placeholder="Type search here" ng-model="formData.filterName" autocorrect="off" autofocus>
+        <i class="clear-search icon ion-ios-close-empty" style="font-size: 18px" ng-click="emptyModal()">
+        </i>
+    </div>
+  </div>
+  <ion-content class="has-header has-subheader">
+    <div class="list">
+      <ion-item menu-close ng-click="">
+        Items should show up here as the user types a search
+      </ion-item>
+      <ion-item menu-close ng-click="">
+        With the option to View, Edit, or Delete when swiping
+      </ion-item>
+    </div>
+  </ion-content>
+</ion-modal-view>
+
+<!--
+<div class="modal" ng-controller="ModalCtrl">
+        <header class="bar bar-header bar-positive">
+          <h1 class="title">Search</h1>
+          <button class="button button-clear button-primary" ng-click="close()">Cancel</button>
+        </header>
+        
+        
+        
+      </div>
+-->
