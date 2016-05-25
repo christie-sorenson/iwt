@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fetch</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 5px;
+        }
+        a { cursor: pointer; color: blue; }
+        a:hover,a.hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+<img id="display"></img>
+<script src="/scripts/ejs.min.js"></script>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+        loadImage();
+    });
+
+
+    /*  In this example, we load an image and then render it.  This would be nice functionality if you are
+        storing dynamic images in a db or creating dynamic images on the server.
+        NOTE:  This was not possible to do with XMLHttpRequest
+     */
+    function loadImage() {
+        var bookList;
+        fetch('/images/html5rocks-logo.png').then( function(response) {
+            return response.blob();
+        }).then(function(image){
+            document.getElementById('display').src = URL.createObjectURL(image);
+        })
+
+    }
+
+
+</script>
+</body>
+</html>

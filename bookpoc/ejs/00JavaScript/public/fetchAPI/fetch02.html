@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fetch</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 5px;
+        }
+        a { cursor: pointer; color: blue; }
+        a:hover,a.hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+<div id="display"></div>
+<script src="/scripts/ejs.min.js"></script>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+        loadBooks();
+    });
+
+
+    /*  In this example, we chain fetch and promises together.
+        fetch, response.json(), and response.text() all return promises
+     */
+    function loadBooks() {
+        var bookList;
+        fetch('/api/books/').then( function(response) {
+            return response.json();
+        }).then(function(books){
+            bookList = books;
+            return fetch('/views/books/list.ejs');
+        }).then (function(response) {
+            return response.text();
+        }).then(function(template){
+            var snippet = ejs.render(template, {books: bookList});
+            document.getElementById('display').innerHTML = snippet;
+        });
+
+    }
+
+
+</script>
+</body>
+</html>

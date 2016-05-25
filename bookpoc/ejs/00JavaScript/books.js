@@ -5,7 +5,13 @@ var db = require('./db');
  * Selects all books and then renders the page with the list.ejs template
  */
 var list = module.exports.list = function(req, res) {
-  db.query('SELECT * from books ORDER BY id', function(err, books) {
+  var limit = '';
+
+  if (req.headers['x-book-limit']){
+    limit = ' LIMIT ' + parseInt(req.headers['x-book-limit'], 10);
+  }
+
+  db.query('SELECT * from books ORDER BY id' + limit, function(err, books) {
     if (err) throw err;
 
     res.json(books);
