@@ -1,0 +1,52 @@
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+ 
+<script>
+/*
+console.log("javascript is working");
+
+function fibo(n){
+  if(n==0 | n==1){
+    return n;
+  }
+  else{
+    return(fibo(n-2)+fibo(n-1));
+  }
+}
+
+for (var i=0; i < 10; i++) {
+  var t0 = performance.now();
+  var result = fibo(30);
+  var t1 = performance.now();
+  console.log('Took', (t1 - t0).toFixed(4), 'milliseconds to generate:', result);
+}*/
+var getJSON = function(url) {
+  return new Promise(function(resolve, reject) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('get', url, true);
+    xhr.responseType = 'json';
+    xhr.onload = function() {
+      var status = xhr.status;
+      if (status == 200) {
+        resolve(xhr.response);
+      } else {
+        reject(status);
+      }
+    };
+    xhr.send();
+  });
+};
+
+getJSON('data.json').then(function(data) {
+    alert('Your Json result is:  ' + data.result); //you can comment this, i used it to debug
+
+    result.innerText = data.result; //display the result in an HTML element
+}, function(status) { //error detection....
+  alert('Something went wrong.');
+});
+</script>
+</body>
+</html>
