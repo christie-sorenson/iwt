@@ -1,0 +1,57 @@
+<ion-view view-title="Bookmarx">
+  <ion-nav-buttons side="right">
+        <button class="button button-icon button-clear ion-search" ng-click="search()" style="right: 10px;">
+        </button>
+        <button class="button button-icon button-clear ion-compose" ng-click="addItem()" style="right: 5px;">
+        </button>
+        <button class="button button-icon button-clear ion-navicon" ng-click="toggleReorder()">
+        </button>
+  </ion-nav-buttons>
+  <ion-content>
+   	
+    <ion-item class="item-divider"> 
+    Favorites
+    </ion-item> 
+    <ion-list show-delete="showDelete"
+	          show-reorder="showReorder"
+	          can-swipe="listCanSwipe">
+      <ion-item ng-repeat="bookmark in bookmarks | orderBy:'+rank'| filter:{tag:'fav'}" class="list-animation" ng-click="openBrowser(bookmark.url)">
+        {{bookmark.title}}
+        <ion-option-button class="button-stable" ng-click="info(bookmark)">
+	      More Info
+	    </ion-option-button>
+	    <ion-option-button class="button-positive" ng-click="onEdit(bookmark, bookmark.id)">
+	      Edit
+	    </ion-option-button>
+        <ion-option-button class="button-assertive" ng-click="onItemDelete(bookmark)">
+		  Delete
+	    </ion-option-button>
+	    <ion-reorder-button class="ion-navicon" on-reorder="moveItem(bookmark, $fromIndex, $toIndex, false)">
+	    </ion-reorder-button>
+      </ion-item>
+    </ion-list>
+
+  <ion-item class="item-divider"> 
+    Read
+    </ion-item> 
+    <ion-list show-delete="showDelete"
+	          show-reorder="showReorder"
+	          can-swipe="listCanSwipe">
+      <ion-item ng-repeat="bookmark in bookmarks | orderBy:'+rank'| filter:{tag:'read'}" class="list-animation" ng-click="openBrowser(bookmark.url)">
+        {{bookmark.title}}
+        <ion-option-button class="button-stable" ng-click="info(bookmark)">
+	      More Info
+	    </ion-option-button>
+	    <ion-option-button class="button-positive" ng-click="onEdit(bookmark, bookmark.id)">
+	      Edit
+	    </ion-option-button>
+        <ion-option-button class="button-assertive" ng-click="onItemDelete(bookmark)">
+		  Delete
+	    </ion-option-button>
+	    <ion-reorder-button class="ion-navicon" on-reorder="moveItem(bookmark, $fromIndex, $toIndex, true)">
+	    </ion-reorder-button>
+      </ion-item>
+    </ion-list>
+
+  </ion-content>
+</ion-view>
