@@ -1,0 +1,6 @@
+<grid-layout class="drawer-content">
+  <stack-layout>
+    <label text="Home" tap="navigate" class="{{ selectedPage == 'home' ? 'selected' : '' }}" />
+    <label text="Settings" tap="navigate" class="{{ selectedPage == 'settings' ? 'selected' : '' }}" />
+  </stack-layout>
+</grid-layout>

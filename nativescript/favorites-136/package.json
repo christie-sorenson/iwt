@@ -1,0 +1,17 @@
+{
+	"description": "CSE 136 Favorites App",
+	"license": "SEE LICENSE IN <your-license-filename>",
+	"readme": "NativeScript Application",
+	"repository": "<fill-your-repository-here>",
+	"nativescript": {
+		"id": "org.nativescript.favorites136",
+		"tns-ios": {
+			"version": "2.0.0"
+		}
+	},
+	"dependencies": {
+		"nativescript-statusbar": "^1.0.0",
+		"nativescript-telerik-ui": "^1.1.1",
+		"tns-core-modules": "2.0.0"
+	}
+}
