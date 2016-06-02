@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IndexedDB</title>
+</head>
+<body>
+<div id="display"></div>
+<script>
+    /*  Using Global Scope. Very bad.  If interacting with other scripts, must namespace/modulerize */
+
+    /* Script contents should be in external file, but kept in here for demo purposes */
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+        openDB(loadData);
+    });
+
+    /*  global variable used to maintain the database connection */
+    var DB;
+
+    /*
+        Open the page's database for usage.  Added in checks for cross-browser support.
+     */
+     function openDB(callback){
+         window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+
+         window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+         window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange
+
+         /* NEW: We are going to create a new store and add data.
+            This will take place in onupgradeneeded, so we will increase the value of the version to 2.
+            NOTE:  We also changed the db name.  THIS is not normally necessary.  For our examples, it would
+            break the earlier ones if we did not change the version on them as well, so we are changing the db name.
+            In real life, all of your examples would update their version number on changes
+         */
+         var request = window.indexedDB.open("cse136-2", 2);
+
+         /*  when the database successfully opens, it will return a reference to the database
+             for future actions
+         */
+         request.onsuccess = function(e) {
+             DB = e.target.result;
+             callback();
+         };
+
+         /*  This is the only place to create object stores.
+             NEW: We will create our 'team' store and specify that 'id' is the key
+         */
+         request.onupgradeneeded = function(e){
+             var db = e.target.result;
+
+             /*  We use autoIncrement: true for the key.  The key will be auto-generated when items are added.
+              The key will be separate from the value object.
+              */
+             if(!db.objectStoreNames.contains('students')) {
+                 db.createObjectStore('students', { autoIncrement:true });
+             }
+
+             /*  NEW: We will set the keyPath to be the number field. The key will not be auto-generated.
+                 The key will be part of the value object.  The values in 'number' must be unique.
+              */
+             if(!db.objectStoreNames.contains('team')) {
+
+                 var teamStoreReq = db.createObjectStore('team', {keyPath:'number'});
+
+
+                 /*  We are going to add the initial data to the students store */
+                 var initialData = [
+                     {number: 19, first: 'Harrison', last: 'Barnes', position: 'Forward'},
+                     {number: 30, first: 'Steph', last: 'Curry', position: 'Guard'},
+                     {number: 23, first: 'Draymond', last: 'Green', position: 'Forward'},
+                     {number: 9, first: 'Andre', last: 'Iguodala', position: 'Guard'},
+                     {number: 34, first: 'Shaun', last: 'Livingston', position: 'Guard'},
+                     {number: 11, first: 'Clay', last: 'Thompson', position: 'Guard'},
+                     {number: 12, first: 'Andrew', last: 'Bogut', position: 'Center'},
+                 ];
+
+                 /*  We ensure that the store is created before adding the data */
+                 teamStoreReq.transaction.oncomplete = function(event) {
+                     var teamStore = db.transaction("team", "readwrite").objectStore("team");
+
+                     /*  Loop through and add the data.  We don't need to keep track of success
+                      since it won't call the onsuccess of the initial request until completed */
+                     for (var i= 0; i< initialData.length; i++) {
+                         teamStore.add(initialData[i]);
+                     }
+                 };
+             }
+         };
+
+         request.onerror = function(e) {
+             console.log(e);
+         };
+
+     }
+
+    function loadData(){
+
+        /*  We are going to change the adding of initial data to ONLY add if there is no current data.
+         We can also add initial data when we create the store as we will see in future examples
+         We use the .count method on the store to see if there is any data yet.  */
+
+        /*  We are going to add the initial data to the students store */
+        var initialData = [
+            {first: 'Ali', last: 'Sorenson', age:20, hometown: 'San Francisco', gender: 'F'},
+            {first: 'Keira', last: 'Sorenson', age:19, hometown: 'San Francisco', gender: 'F' },
+            {first: 'Gavin', last: 'Birmingham', age:21, hometown: 'San Diego', gender:'M' },
+            {first: 'Evy', last: 'Grant', age:20, hometown: 'New York', gender:'F' }
+        ];
+
+        /*  Open a transaction for modifying the students store.
+         We will see in future examples that you can pass multiple stores in the form of an array.
+         We can also chain together a few lines.  */
+        var trans = DB.transaction('students', 'readwrite');
+
+        /* Get reference to the students store */
+        var studentStore = trans.objectStore('students');
+
+        /*  Check the count of the store */
+        var count = studentStore.count();
+        var msg = 'Database ' + DB.name + ' version ' + DB.version + ' successfully opened.';
+
+        count.onsuccess = function() {
+
+            /* Only add the data if the count is 0 */
+            if (count.result === 0) {
+                /*  Since we are adding more than one row, we need to make sure we don't call our report function until
+                 all rows are successfully added.  We will keep track of the success calls and once we have all of
+                 them, we'll call the report function */
+
+                var numRequests = initialData.length;
+
+                for (var i= 0; i< initialData.length; i++) {
+                    var request = studentStore.add(initialData[i]);
+
+                    /*  Keep track of the number of requests so that we only call report after all have been added */
+                    request.onsuccess = function(){
+                        if (--numRequests === 0){
+                            report(msg);
+                        }
+                    };
+                }
+            }
+            else{
+                /* If data is already added, just call report() */
+                report(msg);
+            }
+        };
+    }
+
+    function report(){
+        /*  We are going to update report to show all of the rows in each of the stores.
+         Again, we will need to keep track of the requests for data so that we can wait
+         until all are back before displaying */
+
+        var recordCount = DB.objectStoreNames.length;
+        var outputCount = recordCount;
+        var msg = 'Database ' + DB.name + ' version ' + DB.version + ' successfully opened';
+        msg += ' and holds stores:<br>';
+
+        for (var i=0;i<recordCount;i++){
+            var storeName = DB.objectStoreNames[i];
+
+            /*  We have to create a closure so that storeName displays in the onsuccess callback */
+
+            var outputStore = function(storeName){
+
+                /*  For each store, we open the store and run 'getAll()'
+                 On success, we loop through all of the records to output them */
+                DB.transaction(storeName).objectStore(storeName).getAll().onsuccess = function(e){
+                    var records = e.target.result;
+                    msg += '<h3>' + storeName + '</h3><ul>';
+                    for (var j=0;j<records.length;j++){
+                        msg += '<li>' + JSON.stringify(records[j]) + '</li>';
+                    }
+                    msg += '</ul>';
+
+                    if (--outputCount === 0){
+                        document.getElementById('display').innerHTML = msg;
+                    }
+                };
+            };
+
+            outputStore(storeName);
+        }
+    }
+
+
+</script>
+</body>
+</html>

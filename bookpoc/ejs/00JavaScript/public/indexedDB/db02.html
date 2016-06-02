@@ -7,17 +7,13 @@
 <body>
 <div id="display"></div>
 <script>
-    /*  Using Global Scope. Very bad.  If interacting with other scripts, must namespace/modulerize */
-
-    /* Script contents should be in external file, but kept in here for demo purposes */
-
-    document.addEventListener("DOMContentLoaded", function(event) {
-        openDB(report);
-    });
-
 
     /*  global variable used to maintain the database connection */
     var DB;
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+        openDB(loadData);
+    });
 
     /*
         Open the page's database for usage.  Added in checks for cross-browser support.
@@ -28,10 +24,7 @@
          window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
          window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange
 
-         /* Here we open the database called cse136.
-            The '1' indicates the version of the database.  Anytime
-            we change it or add a store, we need to increase the version.
-         */
+
          var request = window.indexedDB.open("cse136-1", 1);
 
          /*  when the database successfully opens, it will return a reference to the database
@@ -56,6 +49,7 @@
              if(!db.objectStoreNames.contains('students')) {
                  db.createObjectStore('students', { autoIncrement:true });
              }
+
          };
 
          request.onerror = function(e) {
@@ -74,8 +68,46 @@
         }
 
         document.getElementById('display').innerHTML = msg;
-        console.log(DB);
     }
+
+    /*  NEW Function to load data after the database is opened */
+    function loadData(){
+
+        /*  We are going to add the initial data to the students store */
+        var initialData = [
+            {first: 'Ali', last: 'Sorenson', age:20, hometown: 'San Francisco', gender: 'F'},
+            {first: 'Keira', last: 'Sorenson', age:19, hometown: 'San Francisco', gender: 'F' },
+            {first: 'Gavin', last: 'Birmingham', age:21, hometown: 'San Diego', gender:'M' },
+            {first: 'Evy', last: 'Grant', age:20, hometown: 'New York', gender:'F' }
+        ];
+
+        /*  Open a transaction for modifying the students store.
+         We will see in future examples that you can pass multiple stores in the form of an array.
+         We can also chain together a few lines.  */
+        var trans = DB.transaction('students', 'readwrite');
+
+        /* Get reference to the students store */
+        var studentStore = trans.objectStore('students');
+
+        /*  Since we are adding more than one row, we need to make sure we don't call our report function until
+         all rows are successfully added.  We will keep track of the success calls and once we have all of
+         them, we'll call the report function */
+
+        var numRequests = initialData.length;
+
+        for (var i=0;i<initialData.length;i++) {
+            var request = studentStore.add(initialData[i]);
+
+            /*  Keep track of the number of requests so that we only call report after all have been added */
+            request.onsuccess = function(){
+                if (--numRequests === 0){
+                    report();
+                }
+            };
+        }
+    }
+
+
 
 
 </script>
