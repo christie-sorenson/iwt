@@ -1,0 +1,77 @@
+/* Note: prefix with .book to override default style.css via specificity */
+
+
+/* Gitbook Overrides */
+.book p { margin-bottom:20px; }
+.book sup { color:#8dbde2; font-size:12px; }
+.book .page-inner { max-width:1000px; }
+
+
+
+/* Flexbox Styling */
+.bar { padding:10px; height:50px; background:#e6e5d9; border-bottom:1px solid #000; }
+.book .box { position:relative; margin:25px 0; width:500px; font-size:13px; border:1px solid #000; }
+.box-col { width:20%; background:#fff !important; }
+.center { text-align:center; }
+.col { padding:10px; }
+.col:nth-of-type(1n) { background:#ccc; }
+.col:nth-of-type(2n) { background:#bbb; }
+.col:nth-of-type(3n) { background:#aaa; }
+.fa { font-family:'FontAwesome'; }
+.book .highlight { background:#ccc; }
+.book .instruction { margin:10px 0 20px !important; color:#8dbde2; font-style:italic; font-size:12px; }
+.note { padding:15px; display:flex; align-items:center; color:#5a82ab; font-style:normal; background:#e8f4fd; border:1px solid #8dbde2; border-radius:6px; }
+.note > * { margin-right:10px; }
+.note > .fa { margin-top:2px; display:block; color:#83a5c7; font-size:20px; }
+.resize { overflow:auto; resize:both; }
+.source { padding:0 5px; text-transform:uppercase; color:#999; font-size:12px; }
+
+.book [data-demo] { position:relative; margin:25px 0; width:500px; text-align:left; font-size:13px; border-width:1px 1px 0; border-style:solid; border-color:#000; }
+.book [data-demo].center { margin-right:auto; margin-left:auto; }
+.book [data-demo] * { font-size:13px; }
+
+
+/* Flexbox Styling */
+.flex { margin-bottom:30px; min-height:50px; display:flex; background:#fff; border-bottom:1px solid #000; color:#000; font-size:16px; text-align:left;}
+.flex .flex { margin-bottom:0;}
+
+.flex-column { flex-direction:column; }
+.flex-column-reverse { flex-direction:column-reverse; }
+.flex-row { flex-direction:row; }
+.flex-row-reverse { flex-direction:row-reverse; }
+
+.flex-wrap-nowrap { flex-wrap: nowrap; }
+.flex-wrap-wrap { flex-wrap: wrap; }
+.flex-wrap-wrap-reverse { flex-wrap: wrap-reverse; }
+
+.align-items-stretch { align-items: stretch; }
+.align-items-flex-start { align-items: flex-start; }
+.align-items-flex-end { align-items: flex-end; }
+.align-items-center { align-items: center; }
+.align-items-baseline { align-items: baseline; }
+
+.align-self-stretch { align-self: stretch; }
+.align-self-flex-start { align-self: flex-start; }
+.align-self-flex-end { align-self: flex-end; }
+.align-self-center { align-self: center; }
+.align-self-baseline { align-self: baseline; }
+
+.justify-content-flex-start { justify-content: flex-start; }
+.justify-content-flex-end { justify-content: flex-end; }
+.justify-content-center { justify-content: center; }
+.justify-content-space-between { justify-content: space-between; }
+.justify-content-space-around { justify-content: space-around; }
+
+.flex-grow-auto { flex-grow: auto; }
+.flex-grow-0 { flex-grow: 0; }
+.flex-grow-1 { flex-grow: 1; }
+.flex-grow-2 { flex-grow: 2; }
+
+.flex-order-1 { order: 1; }
+.flex-order-2 { order: 2; }
+.flex-order-3 { order: 3; }
+
+.flex-shrink-auto { flex-shrink: auto; }
+.flex-shrink-0 { flex-shrink: 0; }
+.flex-shrink-1 { flex-shrink: 1; }
+.flex-shrink-2 { flex-shrink: 2; }
