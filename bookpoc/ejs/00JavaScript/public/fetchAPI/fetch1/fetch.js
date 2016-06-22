@@ -1,6 +1,5 @@
-window.addEvent('domready', function() {
     loadBooks();
-});
+
 
     /*  In this simple example, we first fetch the resource which returns a promise.
         Then we call response.json() which also returns a promise.
