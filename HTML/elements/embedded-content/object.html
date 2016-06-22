@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>object</title>
+</head>
+<body>
+<object id="IeLabel1" width="325" height="65"
+        classid="CLSID:99B42120-6EC7-11CF-A6C7-00AA00A47DD2">
+    <param name="_ExtentX" value="6879">
+    <param name ="_ExtentY" value="1376">
+    <param name="Caption" value="Hello World">
+    <param name="Alignment" value="4">
+    <param name="Mode" value="1">
+    <param name="ForeColor" value="#FF0000">
+    <param name="FontName" value="Arial">
+    <param name="FontSize" value="36">
+    <b>Hello World for non-ActiveX users!</b>
+</object>
+<!-- Standard HTML style -->
+<object classid="java:Blink.class"
+        standby="Here it comes"
+        height="100" width="300">
+    <param name="lbl"
+           value="Java is fun, exciting, and new.">
+    <param name="speed" value="2">
+    This will display in non-Java-aware or -enabled
+    browsers.
+</object>
+<!-- pulls in remote content here -->
+<object data="pullinthisfile.html">
+    Data not included!
+</object>
+</body>
+</html>

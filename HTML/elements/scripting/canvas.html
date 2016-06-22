@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>canvas</title>
+</head>
+<body>
+<canvas id="canvas1" height="400" width="400">
+    <p class="error">Canvas-Supporting Browser Required</p>
+</canvas>
+<script type="text/javascript">
+    var canvas = document.getElementById("canvas1");
+    var context = canvas.getContext("2d");
+    /* draw simple figure of red and green squares */
+    context.fillStyle = "rgb(255,0,0)";
+    context.fillRect(0,0,100,100);
+    context.fillStyle = "rgb(0,255,0)";
+    context.fillRect(25,25,50,50);
+</script>
+</body>
+</html>

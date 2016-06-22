@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>input</title>
+</head>
+<body>
+
+<form action="#" method="get">
+    <fieldset>
+        <legend>Basics</legend>
+        <p>Enter your name: <input type="text" maxlength="35" size="20"><br>
+            Enter your password: <input type="password" maxlength="35" size="20">
+        </p>
+    </fieldset>
+    <p><label>Which is your favorite food?</label>
+        <input type="radio" name="favorite" value="Mexican">Mexican
+        <input type="radio" name="favorite" value="Russian">Russian
+        <input type="radio" name="favorite" value="Japanese">Japanese
+        <input type="radio" checked name="favorite" value="Other">Other
+    </p>
+
+<p><label> Three Letter Acronyms:
+    <input pattern="[A-Z]{3}" name="threeletter"
+           title="Enter an upper case three letter combination."/>
+</label></p>
+<p><label>Name: <input type="text" name="fullname" placeholder="Thomas A. Powell"></label></p>
+<p><input type="range" name="slider"></p>
+<p><input type="date">
+<p><label> Favorite Dog: <input list="dogs"></label></p>
+<datalist id="dogs">
+    <option>Angus</option>
+    <option>Tucker</option>
+    <option>Cisco</option>
+    <option>Sabrina</option>
+</datalist>
+
+    <p>
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+    </p>
+
+
+</form>
+
+</body>
+</html>

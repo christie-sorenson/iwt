@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>iframe</title>
+</head>
+<body>
+
+<iframe src="http://www.example.com" height="150" width="200"
+        name="FloatingFrame1">
+    Sorry, your browser doesn't support inline frames.
+</iframe>
+<!-- HTML5 example highly restricted -->
+<iframe src="http://www.example.com" height="200" width="200"
+        id="chat" sandbox>
+</iframe>
+<!-- HTML5 example less restricted -->
+<iframe src="http://www.example.com/gadget2" height="200" width="200"
+        id="weather" sandbox="allow-same-origin allow-scripts" seamless>
+</iframe>
+
+</body>
+</html>

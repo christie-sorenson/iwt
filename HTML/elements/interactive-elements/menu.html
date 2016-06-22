@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>menu</title>
+</head>
+<body>
+
+<menu type="menubar">
+    <menuitem label="Add" icon="plus.png"></menuitem>
+    <menuitem label="Edit" default></menuitem>
+    <menuitem label="Delete" disabled></menuitem>
+</menu>
+
+<menu type="context" label="Actions">
+    <menu type="context" label="New">
+        <menuitem label="Document" default></menuitem>
+        <menuitem label="Link"></menuitem>
+        <menuitem label="Section"></menuitem>
+    </menu>
+    <hr>
+    <menuitem label="Sort Ascending" type="radio" radiogroup="sort"></menuitem>
+    <menuitem label="Sort Descending" type="radio" radiogroup="sort"></menuitem>
+</menu>
+
+</body>
+</html>

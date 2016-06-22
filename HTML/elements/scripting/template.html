@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>template</title>
+</head>
+<body>
+<div id="display"></div>
+<template id="list">
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Price</th>
+
+        </tr>
+        <template id="row">
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </template>
+
+    </table>
+</template>
+<script>
+    var table = document.querySelector('#list');
+    var parent = document.importNode(table.content, true);
+    var books = [{title:"The Alloy of Law",author:"Brandon Sanderson",publisher:"Tor Books ",price:20},{title:"The Queen of the Tearling",author:"Erika Johansen",publisher:"Harper",price:9.51},{title:"Truthwitch",author:"Susan Dennard",publisher:"Tor Books",price:9.99}];
+
+    for (var i = 0; i < books.length; i ++) {
+        var book = books[i];
+
+        var row = parent.querySelector('template');
+        var newRow = document.importNode(row.content, true);
+        var cells = newRow.querySelectorAll('td');
+
+        cells[0].textContent = book.title;
+        cells[1].textContent = book.author;
+        cells[2].textContent = book.price;
+
+        row.parentNode.appendChild(newRow);
+    }
+
+    document.getElementById('display').appendChild(parent);
+</script>
+</body>
+</html>

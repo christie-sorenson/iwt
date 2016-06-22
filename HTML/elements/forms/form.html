@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>form</title>
+</head>
+<body>
+
+<form action="dosomething.php"
+      method="post" name="testform" onsubmit="return validate();">
+    <div>
+        <label><strong>Username:</strong>
+            <input type="text" name="username">
+        </label>
+        <br>
+        <label><strong>Comments:</strong>
+            <textarea name="comments" cols="30" rows="8"></textarea>
+        </label>
+        <br>
+        <input type="submit" value="send">
+        <input type="reset" value="clear">
+    </div>
+</form>
+
+</body>
+</html>
