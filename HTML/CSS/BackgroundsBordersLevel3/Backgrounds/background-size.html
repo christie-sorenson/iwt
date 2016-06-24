@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>background-size</title>
+    <style type="text/css">
+        div {float: left;
+            margin: 2em; padding: 1em;
+            height: 125px; width: 350px;
+            background: no-repeat red url(../../images/background.gif);
+            border: 10px dashed black;
+            color: white; text-align: right;}
+    </style>
+</head>
+<body>
+
+<div>
+    Default
+</div>
+
+<div style="background-size: 50px 50px;">
+    Smaller in pixels
+</div>
+
+<div style="background-size: 75px 130px;">
+    Scale differently
+</div>
+
+<div style="background-size: 200% 200%;">
+    Bigger by percentage
+</div>
+
+</body>
+</html>

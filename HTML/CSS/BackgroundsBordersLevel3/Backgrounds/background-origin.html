@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>background-origin</title>
+
+    <style type="text/css">
+        div {float: left;
+            margin: 2em; padding: 1em;
+            height: 125px; width: 350px;
+            background: no-repeat red url(../../images/background.gif);
+            border: 10px dashed black;
+            color: white; text-align: right;}
+    </style>
+</head>
+<body>
+
+<div>
+    default
+</div>
+
+<div style="-webkit-background-origin: border;
+            -moz-background-origin: border;
+            background-origin: border;">
+    background-origin: border
+</div>
+<div style="-webkit-background-origin: padding;
+            -moz-background-origin: padding;
+            background-origin: padding;">
+    background-origin: padding
+</div>
+
+<div style="-webkit-background-origin: content;
+            -moz-background-origin: content;
+            background-origin: content;">
+    background-origin: content
+</div>
+
+
+</body>
+</html>

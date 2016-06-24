@@ -12,7 +12,12 @@
     <menuitem label="Delete" disabled></menuitem>
 </menu>
 
-<menu type="context" label="Actions">
+<div contextmenu="actions" style="border:1px red solid">
+    This is a div block that should have it's own contextmenu if you right click inside of it.  <br>
+    Right now, it is supported by firefox, but no other browser.  Hopefully that will change soon!
+</div>
+
+<menu type="context" id="actions">
     <menu type="context" label="New">
         <menuitem label="Document" default></menuitem>
         <menuitem label="Link"></menuitem>

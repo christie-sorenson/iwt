@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>contextmenu</title>
+</head>
+<body>
+
+<menu type=context id=alertmenu>
+    <menu type="context" label="MY ALERTS">
+        <menuitem label="Say HI" onclick="alert('hi');"></menuitem>
+        <menuitem label="Say BYE" onclick="alert('bye');"></menuitem>
+    </menu>
+</menu>
+
+<div contextmenu="alertmenu" style="border:1px red solid">
+    This is a div block that should have it's own contextmenu if you right click inside of it.  <br>
+    Right now, it is supported by firefox, but no other browser.  Hopefully that will change soon!
+</div>
+
+</body>
+</html>
