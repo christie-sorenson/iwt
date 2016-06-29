@@ -4,9 +4,9 @@ This HTML5 block element defines a region that will be used to display output fr
 
 ---
 
-!INCLUDE "../../HTML/4Elements/forms/output.html"
+!INCLUDE "./HTML/4Elements/forms/output.html"
 
 ---
 
-{% codesnippet "../../HTML/4Elements/forms/output.html", language="html" %}{% endcodesnippet %}
+{% codesnippet "./HTML/4Elements/forms/output.html", language="html" %}{% endcodesnippet %}
 
