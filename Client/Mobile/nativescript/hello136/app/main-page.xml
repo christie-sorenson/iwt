@@ -1,7 +1,0 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
-  <StackLayout id="cse" horizontal-align="center">
-    <Label text="Hello CSE 136" class="title" tap="onAnimate"/>
-    <Image id="myImage" width="150" height="150"/>
-    <Button text="Take" tap="tapAction" />
-  </StackLayout>
-</Page>
