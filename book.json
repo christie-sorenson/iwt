@@ -2,7 +2,8 @@
     "plugins": [
         "zingchart",
         "codesnippet",
-        "include"
+        "include",
+        "include-codeblock"
     ],
     "pluginsConfig": {}
 }
