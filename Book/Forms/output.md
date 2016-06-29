@@ -6,7 +6,6 @@ This HTML5 block element defines a region that will be used to display output fr
 
 {% include "../../HTML/4Elements/forms/output.html" %}
 ---
-
-{% codesnippet "./HTML/4Elements/forms/output.html", language="html" %}{% endcodesnippet %}
+[include](../../HTML/4Elements/forms/output.html)
 
 
