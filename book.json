@@ -1,0 +1,7 @@
+{
+    "plugins": [
+      "zingchart"
+      
+    ],
+    "pluginsConfig": {}
+}
