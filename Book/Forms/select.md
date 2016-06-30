@@ -1,4 +1,6 @@
 # select
 
-Here will be a select example.  
+This element defines a selection list within a form. Depending on the form of the selection list, the control allows the user to select one or more list options.
+
+<% displayrun src='./HTML/4Elements/forms/select.html' %><% enddisplayrun %>
 
