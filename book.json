@@ -3,7 +3,8 @@
         "zingchart",
         "codesnippet",
         "include",
-        "include-codeblock"
+        "include-codeblock",
+        "ace"
     ],
     "pluginsConfig": {}
 }
