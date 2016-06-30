@@ -6,4 +6,5 @@
        * [select](Book/Forms/select.md)
        * [output](Book/Forms/output.md)
        * [input](Book/Forms/input.md)
+       * fieldset
 
