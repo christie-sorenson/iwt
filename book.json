@@ -4,7 +4,8 @@
         "codesnippet",
         "include",
         "include-codeblock",
-        "ace"
+        "ace",
+        "include-display-run"
     ],
     "pluginsConfig": {}
 }
