@@ -9,5 +9,5 @@
        * [fieldset](Book/Forms/fieldset.md)
        * [meter](Book/Forms/meter.md)
 * [CSS](Book/CSS/css.md)
-   * Fonts
+   * [Fonts](Book/CSS/Fonts/fonts.md)
 
