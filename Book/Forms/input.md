@@ -1,3 +1,3 @@
 # input.md
 
-{% displayrun src='../../HTML/4Elements/forms/input.html', display='editor', language='javascript', readOnly='true', theme='github' %}{% enddisplayrun %}
+{% codeeditor src='../../HTML/4Elements/forms/input.html', language='javascript', readOnly='true', theme='github' %}{% endcodeeditor %}
