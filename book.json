@@ -1,11 +1,5 @@
 {
     "plugins": [
-        "zingchart",
-        "codesnippet",
-        "include",
-        "include-codeblock",
-        "ace",
-        "include-display-run",
         "code-editor"
     ],
     "pluginsConfig": {}
